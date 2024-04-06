@@ -1,31 +1,15 @@
 import React from "react";
-
+import plus from "../asset/plus.png";
 const SideNavigate = () => {
   return (
     <div>
-      <div className="h-full p-3 space-y-2 w-60 bg-gray-50 text-gray-800">
-        <div className="flex items-center p-2 space-x-4">
-          <img
-            src="https://source.unsplash.com/100x100/?portrait"
-            alt=""
-            className="w-12 h-12 rounded-full bg-gray-500"
-          />
-          <div>
-            <h2 className="text-lg font-semibold">Leroy Jenkins</h2>
-            <span className="flex items-center space-x-1">
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                className="text-xs hover:underline text-gray-600"
-              >
-                View profile
-              </a>
-            </span>
-          </div>
-        </div>
-        <div className="divide-y divide-gray-300">
-          <ul className="pt-2 pb-4 space-y-1 text-sm">
-            <li className="bg-gray-100 text-gray-900">
+      <div className="h-full p-3 space-y-2 w-60 bg-blue-50 text-gray-800">
+        <button className="mx-5 p-4 px-5 shadow-xl bg-white rounded-lg">
+          ⬇ new
+        </button>
+        <div className="divide-y px-4 divide-gray-300">
+          <ul className="pt-2 pb-4 space-y-1 text-sm ">
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -41,7 +25,7 @@ const SideNavigate = () => {
                 <span>Dashboard</span>
               </a>
             </li>
-            <li>
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -57,7 +41,7 @@ const SideNavigate = () => {
                 <span>Search</span>
               </a>
             </li>
-            <li>
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -74,7 +58,7 @@ const SideNavigate = () => {
                 <span>Chat</span>
               </a>
             </li>
-            <li>
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -92,7 +76,7 @@ const SideNavigate = () => {
                 <span>Orders</span>
               </a>
             </li>
-            <li>
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -110,7 +94,7 @@ const SideNavigate = () => {
             </li>
           </ul>
           <ul className="pt-4 pb-2 space-y-1 text-sm">
-            <li>
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"
@@ -127,7 +111,7 @@ const SideNavigate = () => {
                 <span>Settings</span>
               </a>
             </li>
-            <li>
+            <li className="text-gray-900 rounded-xl hover:bg-blue-200">
               <a
                 rel="noopener noreferrer"
                 href="#"

@@ -59,141 +59,68 @@ function classNames(...classes) {
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="bg-gray-50">
+    <header className="bg-blue-50">
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-6  lg:px-0"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src={photo} alt="" />
+          <a href="#" className=" flex -m-1.5 ">
+            <img className="h-10 w-auto" src={photo} alt="" />
+            <span className="hidden mx-1 m-auto text-xl font-bold text-gray-500 md:block lg:block">
+              Drive Master
+            </span>
           </a>
         </div>
-        <div className="flex items-center md:space-x-4">
-          <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-              <button
+        <div className="flex items-center  md:space-x-4  rounded-xl bg-white">
+          <div className="relative  rounded-xl w-full bg-white">
+            <span className="absolute    inset-y-0 left-0 flex items-center pl-2">
+              {/* <button
                 type="submit"
                 title="Search"
-                className="p-1 focus:outline-none focus:ring"
+                className="p-1  rounded-xl focus:outline-none focus:ring"
+              > */}
+              <svg
+                fill="currentColor"
+                viewBox="0 0 512 512"
+                className="w-4 h-4 text-gray-800"
               >
-                <svg
-                  fill="currentColor"
-                  viewBox="0 0 512 512"
-                  className="w-4 h-4 text-gray-800"
-                >
-                  <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
-                </svg>
-              </button>
+                <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
+              </svg>
+              {/* </button> */}
             </span>
             <input
               type="search"
               name="Search"
               placeholder="Search..."
-              className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none bg-gray-100 text-gray-800 focus:bg-gray-50"
+              className="w-44 py-2 pl-10 text-sm  sm:w-auto focus:outline-none bg-white rounded-xl text-gray-800 focus:bg-gray-50"
             />
           </div>
-          <button
-            type="button"
-            className="hidden px-6 py-2 font-semibold rounded lg:block bg-teal-600 text-gray-50"
-          >
-            Log in
-          </button>
         </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
-              <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-400"
-                aria-hidden="true"
-              />
-            </Popover.Button>
 
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
-                  {products.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                    >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="flex-auto">
-                        <a
-                          href={item.href}
-                          className="block font-semibold text-gray-900"
-                        >
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {callsToAction.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                    >
-                      <item.icon
-                        className="h-5 w-5 flex-none text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-              </Popover.Panel>
-            </Transition>
-          </Popover>
-
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </a>
-        </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+        <div className=" lg:flex lg:flex-1 lg:justify-end">
+          <div className="flex items-center  space-x-4">
+            <div className="flex ">
+              <button
+                type="button"
+                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <span className="sr-only">Open main menu</span>
+                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <img
+              src="https://source.unsplash.com/100x100/?portrait"
+              alt=""
+              className="w-12 h-12 rounded-full bg-gray-500"
+            />
+          </div>
         </div>
       </nav>
       <Dialog
         as="div"
-        className="lg:hidden"
+        className=""
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
       >
