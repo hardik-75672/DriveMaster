@@ -59,7 +59,7 @@ function classNames(...classes) {
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="bg-blue-50">
+    <header className="bg-blue-50 shadow-sm">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6  lg:px-0"
         aria-label="Global"
