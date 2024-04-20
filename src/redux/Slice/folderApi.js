@@ -16,6 +16,7 @@ export function getDataApi() {
     // querySnapshot.forEach((doc) => {
     //   console.log(doc.id, " => ", doc.data());
     // });
+    console.log(querySnapshot);
     resolve({ querySnapshot });
   });
 }

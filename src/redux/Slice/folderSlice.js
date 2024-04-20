@@ -27,8 +27,8 @@ export const getdataAsync = createAsyncThunk("Slice/getDataApi", async () => {
   console.log(res.querySnapshot.docs);
   const data = res.querySnapshot.docs;
   const arr = data.map((data) => {
-    console.log(data.id);
-    return data.id;
+    console.log(data.data());
+    return data.data();
   });
   return arr;
 });
@@ -49,6 +49,7 @@ export const folderSlice = createSlice({
       .addCase(createFolderAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.userFolders = [...state.userFolders, action.payload];
+        state.isLoading = false;
       })
       .addCase(getdataAsync.pending, (state) => {
         state.status = "loading";
@@ -56,8 +57,10 @@ export const folderSlice = createSlice({
       .addCase(getdataAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.userFolders = action.payload;
+        state.isLoading = false;
       });
   },
 });
-
+export const selectUserFolder = (state) => state.folder.userFolders;
+export const selectisLoading = (state) => state.folder.isLoading;
 export default folderSlice.reducer;
