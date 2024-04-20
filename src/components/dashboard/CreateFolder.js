@@ -48,7 +48,7 @@ const CreateFolder = ({ setIsCreateFolderModelOpen }) => {
   };
 
   const checkFolderPresent = (name) => {
-    const folderPresent = userFolders.find((folder) => folder.name === name);
+    const folderPresent = userFolders.find((folder) => folder === name);
     if (folderPresent) {
       return true;
     } else {
