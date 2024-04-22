@@ -6,6 +6,7 @@ export function createFolderApi(data) {
     const collectionRef = collection(db, "folder");
     const res = await addDoc(collectionRef, data);
     console.log(res.id);
+    window.location.reload();
     resolve({ res });
   });
 }

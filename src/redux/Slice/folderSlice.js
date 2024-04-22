@@ -28,7 +28,8 @@ export const getdataAsync = createAsyncThunk("Slice/getDataApi", async () => {
   const data = res.querySnapshot.docs;
   const arr = data.map((data) => {
     console.log(data.data());
-    return data.data();
+    const val = { userData: data.data(), userID: data.id };
+    return val;
   });
   return arr;
 });
