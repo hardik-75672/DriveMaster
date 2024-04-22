@@ -4,6 +4,7 @@ import ListIcon from "@mui/icons-material/List";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import file from "../asset/file1.png";
+import folder from "../asset/folder1.png";
 import {
   addDoc,
   collection,
@@ -18,71 +19,18 @@ import { ref } from "firebase/storage";
 import { getDatabase, onValue } from "firebase/database";
 import { useToast } from "@chakra-ui/react";
 import MainDashboard from "./dashboard/MainDashboard";
+import { useSelector } from "react-redux";
+import { selectUserFolder } from "../redux/Slice/folderSlice";
+import { useNavigate } from "react-router-dom";
 
-const Content = () => {
-  const [folder, setFolder] = useState();
-  const [flag, setFlag] = useState("files-1");
-  const [book, setBook] = useState([]);
-  const toast = useToast();
-
-  const items = ["file1", "file2", "file3", "file4"];
-  const handleFolder = async (e) => {
-    e.preventDefault();
-
-    // const val = doc(db, "files");
-    // const collectionVal = collection(val, folder);
-    // addDoc(collectionVal, {
-    //   name: "hardik",
-
-    // });
-
-    // this is work when 3 argument are been loaded for
-    // const docRef = await addDoc(collection(db, "cities", "BJ", "hh"), {
-    //   name: "Tokyoop",
-    //   country: "Japan",
-    // });
-
-    // const cityRef = doc(db, "BJ", "hardik", "opp", "op");
-    // setDoc(cityRef, { capital: true }, { merge: true });
-
-    await setDoc(doc(db, "cities", "BJ", "hh", "pppp"), {
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA",
-    });
-
-    // this is used for set new docs
-
-    // await setDoc(doc(db, "cities", "new-city-id"), {
-    //   name: "Los Angeles",
-    //   state: "CA",
-    //   country: "USA",
-    // });
+const Content = ({ type, userFolder1 }) => {
+  const navigate = useNavigate();
+  const handleDblClick = (id) => {
+    if (type === "folder") {
+      navigate(`/home/folder/${id}`);
+    } else {
+    }
   };
-
-  const list = async (e) => {
-    e.preventDefault();
-
-    const docRef = await getDocs(collection(db, "files"));
-    docRef.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.data());
-    });
-  };
-
-  useEffect(() => {
-    const listAllBooks = async () => {
-      const ref = collection(db, "files");
-      const docSnap = await getDocs(ref);
-      docSnap.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.data(), doc.metadata);
-      });
-      setBook(docSnap);
-    };
-    listAllBooks();
-  }, []);
-
   return (
     <>
       <div className="flex flex-1 rounded-xl bg-white">
@@ -101,16 +49,23 @@ const Content = () => {
             {/* <--------- grid data -----------> */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {/* {<------------- data list ------------->} */}
-              {items.map((item) => {
+              {userFolder1.map((item) => {
                 return (
-                  <div className="text-center border border-gray-200 rounded-md mx-10 min-w-[200px] p-4">
-                    <div className="text-gray-500 m-auto mb-2">
-                      <img src={file} className="m-auto w-auto"></img>
-                    </div>
-                    <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
-                      first file
+                  <p
+                    className="text-center border border-gray-200 rounded-md mx-10 min-w-[200px] p-4"
+                    onDoubleClick={() => handleDblClick(item.userID)}
+                  >
+                    <p className="text-gray-500 m-auto mb-2">
+                      {type === "folder" ? (
+                        <img src={folder} className="m-auto w-auto"></img>
+                      ) : (
+                        <img src={file} className="m-auto  w-1/2"></img>
+                      )}
+                      <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
+                        {item.userData ? item.userData.name : "file"}
+                      </p>
                     </p>
-                  </div>
+                  </p>
                 );
               })}
             </div>
@@ -131,7 +86,7 @@ const Content = () => {
               </p>
             </div>
           </div>
-          <MainDashboard />
+          {/* <MainDashboard /> */}
         </div>
       </div>
     </>

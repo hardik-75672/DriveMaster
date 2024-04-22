@@ -6,6 +6,7 @@ import {
   selectUserFolder,
   selectisLoading,
 } from "../../../redux/Slice/folderSlice";
+import Content from "../../Content";
 
 const HomeComponent = () => {
   const item = ["Dededed", "deded", "deded"];
@@ -16,11 +17,11 @@ const HomeComponent = () => {
   console.log(userFolder1);
   useEffect(() => {
     // setUserFolder(userFolder);
-  }, [isLoading, userFolder1, userFolder]);
+  }, [userFolder1]);
   return (
     <div>
-      <ShowItems title={"hardik"} items={item} />
-      {!isLoading && <ShowItems title={"hardik"} items={userFolder1} />}
+      <Content type={"file"} userFolder1={item} />
+      {!isLoading && <Content type={"folder"} userFolder1={userFolder1} />}
     </div>
   );
 };
