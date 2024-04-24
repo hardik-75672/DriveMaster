@@ -4,8 +4,8 @@ import Content from "../components/Content";
 import Header from "../components/Header";
 import { selectUser } from "../redux/Slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { getdataAsync } from "../redux/Slice/folderSlice";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { currentChangeAsync, getdataAsync } from "../redux/Slice/folderSlice";
 import CreateFolder from "../components/dashboard/CreateFolder";
 import HomeComponent from "../components/dashboard/homeComponent/HomeComponent";
 import { Home } from "@mui/icons-material";
@@ -14,9 +14,14 @@ const HomePage = () => {
   const [isCreateFolderModelOpen, setIsCreateFolderModelOpen] = useState(false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  console.log(user);
   dispatch(getdataAsync());
-  console.log(isCreateFolderModelOpen);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/home") {
+      dispatch(currentChangeAsync("root"));
+    }
+  }, [location.pathname]);
   return (
     <>
       {/* {!user && <Navigate to="/login"></Navigate>} */}

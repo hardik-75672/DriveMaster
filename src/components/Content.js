@@ -19,14 +19,19 @@ import { ref } from "firebase/storage";
 import { getDatabase, onValue } from "firebase/database";
 import { useToast } from "@chakra-ui/react";
 import MainDashboard from "./dashboard/MainDashboard";
-import { useSelector } from "react-redux";
-import { selectUserFolder } from "../redux/Slice/folderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  currentChangeAsync,
+  selectUserFolder,
+} from "../redux/Slice/folderSlice";
 import { useNavigate } from "react-router-dom";
 
 const Content = ({ type, userFolder1 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleDblClick = (id) => {
     if (type === "folder") {
+      dispatch(currentChangeAsync(id));
       navigate(`/home/folder/${id}`);
     } else {
     }
