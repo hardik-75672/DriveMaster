@@ -21,3 +21,9 @@ export function getDataApi() {
     resolve({ querySnapshot });
   });
 }
+
+export function currrentFolderChange(folderId) {
+  return new Promise(async (resolve, reject) => {
+    resolve({ folderId });
+  });
+}

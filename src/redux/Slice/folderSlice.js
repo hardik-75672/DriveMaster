@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createFolderApi, getDataApi } from "./folderApi";
+import { createFolderApi, currrentFolderChange, getDataApi } from "./folderApi";
 import { useDispatch } from "react-redux";
 const initialState = {
   isLoading: true,
@@ -21,10 +21,7 @@ export const createFolderAsync = createAsyncThunk(
 );
 
 export const getdataAsync = createAsyncThunk("Slice/getDataApi", async () => {
-  console.log("gcghjkjh");
   const res = await getDataApi();
-  console.log("opop");
-  console.log(res.querySnapshot.docs);
   const data = res.querySnapshot.docs;
   const arr = data.map((data) => {
     console.log(data.data());
@@ -33,6 +30,15 @@ export const getdataAsync = createAsyncThunk("Slice/getDataApi", async () => {
   });
   return arr;
 });
+
+export const currentChangeAsync = createAsyncThunk(
+  "Slice/currrentFolderChange",
+  async (id) => {
+    const res = await currrentFolderChange(id);
+
+    return id;
+  }
+);
 
 export const folderSlice = createSlice({
   name: "folder",
@@ -59,6 +65,14 @@ export const folderSlice = createSlice({
         state.status = "idle";
         state.userFolders = action.payload;
         state.isLoading = false;
+      })
+      .addCase(currentChangeAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(currentChangeAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        console.log(action.payload);
+        state.currentFolder = action.payload;
       });
   },
 });
