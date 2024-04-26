@@ -8,7 +8,7 @@ const initialState = {
   userFiles: [],
   adminFolders: [],
   adminFiles: [],
-  currentFolder: "root",
+  currentFolder: [],
 };
 export const createFolderAsync = createAsyncThunk(
   "Slice/createFolderApi",
@@ -39,6 +39,11 @@ export const currentChangeAsync = createAsyncThunk(
     return id;
   }
 );
+export const currentChangePOPAsync = createAsyncThunk("Slice/", async (id) => {
+  const res = await currrentFolderChange(id);
+
+  return id;
+});
 
 export const folderSlice = createSlice({
   name: "folder",
@@ -72,10 +77,19 @@ export const folderSlice = createSlice({
       .addCase(currentChangeAsync.fulfilled, (state, action) => {
         state.status = "idle";
         console.log(action.payload);
-        state.currentFolder = action.payload;
+        state.currentFolder.push(action.payload);
+      })
+      .addCase(currentChangePOPAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(currentChangePOPAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        console.log(action.payload);
+        state.currentFolder.pop();
       });
   },
 });
 export const selectUserFolder = (state) => state.folder.userFolders;
 export const selectisLoading = (state) => state.folder.isLoading;
+export const selectCurrentFolder = (state) => state.folder.currentFolder;
 export default folderSlice.reducer;

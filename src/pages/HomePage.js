@@ -5,14 +5,21 @@ import Header from "../components/Header";
 import { selectUser } from "../redux/Slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { currentChangeAsync, getdataAsync } from "../redux/Slice/folderSlice";
+import {
+  currentChangeAsync,
+  currentChangePOPAsync,
+  getdataAsync,
+  selectCurrentFolder,
+} from "../redux/Slice/folderSlice";
 import CreateFolder from "../components/dashboard/CreateFolder";
 import HomeComponent from "../components/dashboard/homeComponent/HomeComponent";
 import { Home } from "@mui/icons-material";
 import FolderComponent from "../components/dashboard/folder/FolderComponent";
+import BreadCrumb from "../components/dashboard/homeComponent/BreadCrumb";
 const HomePage = () => {
   const [isCreateFolderModelOpen, setIsCreateFolderModelOpen] = useState(false);
   const user = useSelector(selectUser);
+  const currentFolder = useSelector(selectCurrentFolder);
   const dispatch = useDispatch();
   dispatch(getdataAsync());
   const location = useLocation();
@@ -21,7 +28,10 @@ const HomePage = () => {
     if (location.pathname === "/home") {
       dispatch(currentChangeAsync("root"));
     }
-  }, [location.pathname]);
+    window.addEventListener("popstate", () => {
+      dispatch(currentChangePOPAsync());
+    });
+  }, [location.pathname, window, selectCurrentFolder]);
   return (
     <>
       {/* {!user && <Navigate to="/login"></Navigate>} */}
@@ -40,7 +50,9 @@ const HomePage = () => {
             <Route path="" element={<HomeComponent></HomeComponent>}></Route>
             <Route
               path="/folder/:folderId"
-              element={<FolderComponent></FolderComponent>}
+              element={
+                <FolderComponent folder={selectCurrentFolder}></FolderComponent>
+              }
             ></Route>
           </Routes>
           {/* <HomeComponent /> */}
