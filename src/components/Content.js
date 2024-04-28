@@ -22,6 +22,7 @@ import MainDashboard from "./dashboard/MainDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import {
   currentChangeAsync,
+  getdataAsync,
   selectUserFolder,
 } from "../redux/Slice/folderSlice";
 import { useNavigate } from "react-router-dom";
@@ -29,8 +30,14 @@ import { useNavigate } from "react-router-dom";
 const Content = ({ type, userFolder1 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleDblClick = (id) => {
+  // dispatch(getdataAsync("/folder"));
+  const handleDblClick = (id, path) => {
     if (type === "folder") {
+      if (path == "folder") {
+        let str = "/" + id + "/folder";
+        path += str;
+      }
+      dispatch(getdataAsync(path));
       dispatch(currentChangeAsync(id));
       navigate(`/home/folder/${id}`);
     } else {
@@ -58,7 +65,7 @@ const Content = ({ type, userFolder1 }) => {
                 return (
                   <p
                     className="text-center border border-gray-200 rounded-md mx-10 min-w-[200px] p-4"
-                    onDoubleClick={() => handleDblClick(item.userID)}
+                    onDoubleClick={() => handleDblClick(item.userId, item.path)}
                   >
                     <p className="text-gray-500 m-auto mb-2">
                       {type === "folder" ? (
@@ -67,7 +74,7 @@ const Content = ({ type, userFolder1 }) => {
                         <img src={file} className="m-auto  w-1/2"></img>
                       )}
                       <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
-                        {item.userData ? item.userData.name : "file"}
+                        {item.path}
                       </p>
                     </p>
                   </p>

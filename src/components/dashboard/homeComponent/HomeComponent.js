@@ -17,12 +17,13 @@ const HomeComponent = () => {
   const userFolder1 = useSelector(selectUserFolder);
   const currentFolder = useSelector(selectCurrentFolder);
   // console.log(currentFolder);
-  useEffect(() => {
-    // setUserFolder(userFolder);
-  }, [userFolder1]);
+  // useEffect(() => {
+  //   // setUserFolder(userFolder);
+  // }, [userFolder1]);
   return (
     <div>
-      <BreadCrumb folder={currentFolder} />
+      {/* <BreadCrumb folder={currentFolder} /> */}
+      <BreadCrumb />
 
       <Content type={"file"} userFolder1={item} />
       {!isLoading && <Content type={"folder"} userFolder1={userFolder1} />}

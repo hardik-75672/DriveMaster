@@ -16,22 +16,41 @@ import HomeComponent from "../components/dashboard/homeComponent/HomeComponent";
 import { Home } from "@mui/icons-material";
 import FolderComponent from "../components/dashboard/folder/FolderComponent";
 import BreadCrumb from "../components/dashboard/homeComponent/BreadCrumb";
+import { get } from "firebase/database";
 const HomePage = () => {
   const [isCreateFolderModelOpen, setIsCreateFolderModelOpen] = useState(false);
   const user = useSelector(selectUser);
   const currentFolder = useSelector(selectCurrentFolder);
   const dispatch = useDispatch();
-  dispatch(getdataAsync());
+  // dispatch(getdataAsync("/folder"));
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === "/home") {
-      dispatch(currentChangeAsync("root"));
-    }
-    window.addEventListener("popstate", () => {
+    const handlePopstate = () => {
+      // This function will be called when user navigates back
+      // You can perform your data changes here
+      console.log("Navigated back");
+      // Example: reload data or make API call
       dispatch(currentChangePOPAsync());
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, []);
+
+  useEffect(() => {
+    let str = "folder";
+    currentFolder.map((item) => {
+      if (item != "Root") {
+        str += "/" + item + "/folder";
+      }
     });
-  }, [location.pathname, window, selectCurrentFolder]);
+    console.log(str);
+    dispatch(getdataAsync(str));
+  }, [dispatch, currentFolder]);
   return (
     <>
       {/* {!user && <Navigate to="/login"></Navigate>} */}
