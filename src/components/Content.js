@@ -32,11 +32,12 @@ const Content = ({ type, userFolder1 }) => {
   const dispatch = useDispatch();
   // dispatch(getdataAsync("/folder"));
   const handleDblClick = (id, path) => {
+    console.log(path);
     if (type === "folder") {
-      if (path == "folder") {
-        let str = "/" + id + "/folder";
-        path += str;
-      }
+      // if (path != "folder") {
+      //   let str = "/" + id + "/folder";
+      //   path += "/folder";
+      // }
       dispatch(getdataAsync(path));
       dispatch(currentChangeAsync(id));
       navigate(`/home/folder/${id}`);

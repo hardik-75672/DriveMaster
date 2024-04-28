@@ -28,7 +28,7 @@ const CreateFolder = ({ setIsCreateFolderModelOpen }) => {
         if (!checkFolderPresent(folderName)) {
           let str = "folder";
           const path_2 = currentFolder.map((item) => {
-            if (item != "Root") str += "/" + item;
+            if (item != "Root") str += "/" + item + "/folder";
           });
           const data = {
             createdAt: new Date(),
@@ -41,9 +41,9 @@ const CreateFolder = ({ setIsCreateFolderModelOpen }) => {
             updatedAt: new Date(1713780153632),
           };
           console.log(str);
-          if (str != "folder") {
-            str += "/folder";
-          }
+          // if (str != "folder") {
+          //   str += "/folder";
+          // }
           dispatch(createFolderAsync({ data, str }));
           console.log(data);
         } else {
