@@ -1,19 +1,20 @@
 import { addDoc, collection, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../Firebase";
+import { ConstructionOutlined } from "@mui/icons-material";
 
-export function createFolderApi(data) {
+export function createFolderApi(data, str) {
   return new Promise(async (resolve, reject) => {
-    const collectionRef = collection(db, "folder");
+    const collectionRef = collection(db, str);
     const res = await addDoc(collectionRef, data);
-    console.log(res.id);
     window.location.reload();
     resolve({ res });
   });
 }
 
-export function getDataApi() {
+export function getDataApi(path) {
   return new Promise(async (resolve, reject) => {
-    const querySnapshot = await getDocs(collection(db, "folder"));
+    console.log(path);
+    const querySnapshot = await getDocs(collection(db, path));
     // querySnapshot.forEach((doc) => {
     //   console.log(doc.id, " => ", doc.data());
     // });

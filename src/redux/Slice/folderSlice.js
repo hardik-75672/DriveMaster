@@ -8,28 +8,45 @@ const initialState = {
   userFiles: [],
   adminFolders: [],
   adminFiles: [],
-  currentFolder: [],
+  currentFolder: ["Root"],
 };
 export const createFolderAsync = createAsyncThunk(
   "Slice/createFolderApi",
-  async (data) => {
-    const res = await createFolderApi(data);
+  async ({ data, str }) => {
+    console.log(str);
+    const res = await createFolderApi(data, str);
 
-    console.log(res.res.id);
     return res.res.id;
   }
 );
+const serializeTimestamp = (timestamp) => {
+  if (timestamp && timestamp.toMillis) {
+    return timestamp.toMillis(); // Convert Firestore Timestamp to milliseconds
+  }
+  return timestamp;
+};
 
-export const getdataAsync = createAsyncThunk("Slice/getDataApi", async () => {
-  const res = await getDataApi();
-  const data = res.querySnapshot.docs;
-  const arr = data.map((data) => {
-    console.log(data.data());
-    const val = { userData: data.data(), userID: data.id };
-    return val;
-  });
-  return arr;
-});
+export const getdataAsync = createAsyncThunk(
+  "Slice/getDataApi",
+  async (path) => {
+    console.log(path);
+    const res = await getDataApi(path);
+    const data = res.querySnapshot.docs;
+    const arr = data.map((data) => {
+      const temp = data.data();
+      const val = {
+        ...temp,
+        createdAt: serializeTimestamp(temp.createdAt),
+        updatedAt: serializeTimestamp(temp.updatedAt),
+        lastAccesed: serializeTimestamp(temp.lastAccesed),
+        userId: data.id,
+      };
+      return val;
+    });
+    console.log(arr);
+    return arr;
+  }
+);
 
 export const currentChangeAsync = createAsyncThunk(
   "Slice/currrentFolderChange",
@@ -40,6 +57,7 @@ export const currentChangeAsync = createAsyncThunk(
   }
 );
 export const currentChangePOPAsync = createAsyncThunk("Slice/", async (id) => {
+  console.log("p");
   const res = await currrentFolderChange(id);
 
   return id;
@@ -76,7 +94,6 @@ export const folderSlice = createSlice({
       })
       .addCase(currentChangeAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload);
         state.currentFolder.push(action.payload);
       })
       .addCase(currentChangePOPAsync.pending, (state) => {
@@ -84,7 +101,6 @@ export const folderSlice = createSlice({
       })
       .addCase(currentChangePOPAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload);
         state.currentFolder.pop();
       });
   },
