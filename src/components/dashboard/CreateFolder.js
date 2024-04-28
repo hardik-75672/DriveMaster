@@ -19,24 +19,32 @@ const CreateFolder = ({ setIsCreateFolderModelOpen }) => {
     }),
     shallowEqual
   );
-
+  console.log(currentFolder);
   console.log(userFolders);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (folderName) {
       if (folderName.length > 3) {
         if (!checkFolderPresent(folderName)) {
+          let str = "folder";
+          const path_2 = currentFolder.map((item) => {
+            if (item != "Root") str += "/" + item;
+          });
           const data = {
             createdAt: new Date(),
             name: folderName,
             userId: userId,
             createdBy: "hardik",
-            path: currentFolder === "root" ? [] : ["parent folder path!"],
+            path: str,
             parent: currentFolder,
             lastAccessed: null,
-            updatedAt: new Date(),
+            updatedAt: new Date(1713780153632),
           };
-          dispatch(createFolderAsync(data));
+          console.log(str);
+          if (str != "folder") {
+            str += "/folder";
+          }
+          dispatch(createFolderAsync({ data, str }));
           console.log(data);
         } else {
           alert("folder already have");
