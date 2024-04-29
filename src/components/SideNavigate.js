@@ -69,7 +69,7 @@ const SideNavigate = ({ setIsCreateFolderModelOpen }) => {
   return (
     <>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <div className=" relative top-1/2 bg-white w-400px mx-96 transform -translate-y-1/2 p-10  ">
+        <div className=" relative top-1/2 bg-white w-400px  mx-96 transform -translate-y-1/2 p-10  ">
           <form onSubmit={handleUpload}>
             <div className="text-center border-b border-gray-300 h-40">
               <h3>Select file you want to upload</h3>
@@ -98,7 +98,7 @@ const SideNavigate = ({ setIsCreateFolderModelOpen }) => {
         </div>
       </Modal>
       <div>
-        <div className="shadow-xl h-full p-3 space-y-2 w-60 bg-blue-50 text-gray-800">
+        <div className="shadow-xl h-lvh p-3 space-y-2 w-60 bg-blue-50 text-gray-800">
           <button
             className="mx-5 p-3 px-4 shadow-xl bg-white rounded-lg"
             onClick={() => setOpen(true)}
