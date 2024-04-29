@@ -16,17 +16,18 @@ const HomeComponent = () => {
 
   const userFolder1 = useSelector(selectUserFolder);
   const currentFolder = useSelector(selectCurrentFolder);
+
   // console.log(currentFolder);
-  // useEffect(() => {
-  //   // setUserFolder(userFolder);
-  // }, [userFolder1]);
+
   return (
     <div>
       {/* <BreadCrumb folder={currentFolder} /> */}
-      <BreadCrumb />
+      <div className="w-full h-screen overflow-scroll">
+        <BreadCrumb />
 
-      <Content type={"file"} userFolder1={item} />
-      {!isLoading && <Content type={"folder"} userFolder1={userFolder1} />}
+        <Content type={"file"} userFolder1={item} />
+        {!isLoading && <Content type={"folder"} userFolder1={userFolder1} />}
+      </div>
     </div>
   );
 };

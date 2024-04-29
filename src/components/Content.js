@@ -23,13 +23,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   currentChangeAsync,
   getdataAsync,
+  selectCurrentFolder,
   selectUserFolder,
 } from "../redux/Slice/folderSlice";
 import { useNavigate } from "react-router-dom";
+import { selectUser } from "../redux/Slice/authSlice";
 
 const Content = ({ type, userFolder1 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentFolder = useSelector(selectCurrentFolder);
   // dispatch(getdataAsync("/folder"));
   const handleDblClick = (id, path) => {
     console.log(path);
@@ -38,6 +41,7 @@ const Content = ({ type, userFolder1 }) => {
       //   let str = "/" + id + "/folder";
       //   path += "/folder";
       // }
+
       dispatch(getdataAsync(path));
       dispatch(currentChangeAsync(id));
       navigate(`/home/folder/${id}`);
@@ -75,7 +79,7 @@ const Content = ({ type, userFolder1 }) => {
                         <img src={file} className="m-auto  w-1/2"></img>
                       )}
                       <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
-                        {item.path}
+                        {item.name}
                       </p>
                     </p>
                   </p>

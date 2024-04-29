@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createFolderApi, currrentFolderChange, getDataApi } from "./folderApi";
 import { useDispatch } from "react-redux";
+
 const initialState = {
   isLoading: true,
   folder: "root",
@@ -16,7 +17,7 @@ export const createFolderAsync = createAsyncThunk(
     console.log(str);
     const res = await createFolderApi(data, str);
 
-    return res.res.id;
+    return res.res;
   }
 );
 const serializeTimestamp = (timestamp) => {

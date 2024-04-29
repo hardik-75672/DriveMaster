@@ -3,7 +3,7 @@ import React from "react";
 const SubBar = ({ setIsCreateFolderModelOpen }) => {
   return (
     <div>
-      <header className="p-2 bg-gray-100 text-gray-800">
+      <header className="p-2 bg-gray-100 h-screen text-gray-800">
         <div className="container flex justify-between h-16 mx-auto">
           <p
             rel="noopener noreferrer"

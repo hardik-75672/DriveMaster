@@ -4,7 +4,13 @@ import Content from "../components/Content";
 import Header from "../components/Header";
 import { selectUser } from "../redux/Slice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import {
   currentChangeAsync,
   currentChangePOPAsync,
@@ -24,7 +30,11 @@ const HomePage = () => {
   const dispatch = useDispatch();
   // dispatch(getdataAsync("/folder"));
   const location = useLocation();
-
+  const param = window.location.href;
+  const url = new URL(param);
+  console.log(url);
+  const rrr = ["opo", "opopo"];
+  // localStorage.setItem("current", JSON.stringify(["Root"]));
   useEffect(() => {
     const handlePopstate = () => {
       // This function will be called when user navigates back
@@ -43,18 +53,18 @@ const HomePage = () => {
 
   useEffect(() => {
     let str = "folder";
+
     currentFolder.map((item) => {
       if (item != "Root") {
         str += "/" + item + "/folder";
       }
     });
-    console.log(str);
     dispatch(getdataAsync(str));
   }, [dispatch, currentFolder]);
   return (
     <>
       {/* {!user && <Navigate to="/login"></Navigate>} */}
-      <div>
+      <div className=" h-screen overflow">
         <Header />
         <div className="flex">
           {isCreateFolderModelOpen && (
