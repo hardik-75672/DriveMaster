@@ -16,7 +16,10 @@ import starred from "../asset/starred.png";
 
 // import firebase from "firebase";
 
-const SideNavigate = ({ setIsCreateFolderModelOpen }) => {
+const SideNavigate = ({
+  setIsCreateFolderModelOpen,
+  setIsCreateFolderModelOpen2,
+}) => {
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState(null);
@@ -121,17 +124,19 @@ const SideNavigate = ({ setIsCreateFolderModelOpen }) => {
                 </a>
               </li>
               <li className="text-gray-900 rounded-xl hover:bg-blue-200">
-                <a
+                <button
                   rel="noopener noreferrer"
-                  href="#"
                   className="flex items-center p-2 space-x-3 rounded-md"
+                  onClick={() => {
+                    setIsCreateFolderModelOpen2(true);
+                  }}
                 >
                   <img
                     src={create}
                     className="w-5 h-5 fill-current text-gray-600"
                   />
                   <span>Create File</span>
-                </a>
+                </button>
               </li>
               <li className="text-gray-900 rounded-xl hover:bg-blue-200">
                 <button
