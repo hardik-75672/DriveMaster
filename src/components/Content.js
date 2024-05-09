@@ -5,6 +5,8 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import file from "../asset/file1.png";
 import folder from "../asset/folder1.png";
+import pdf from "../asset/icons8-pdf-64.png";
+
 import {
   addDoc,
   collection,
@@ -36,16 +38,37 @@ const Content = ({ type, userFolder1 }) => {
   // dispatch(getdataAsync("/folder"));
   const handleDblClick = (id, path) => {
     console.log(path);
-    if (type === "folder") {
-      // if (path != "folder") {
-      //   let str = "/" + id + "/folder";
-      //   path += "/folder";
-      // }
+    // if (type === "folder") {
+    // if (path != "folder") {
+    //   let str = "/" + id + "/folder";
+    //   path += "/folder";
+    // }
 
-      dispatch(getdataAsync(path));
-      dispatch(currentChangeAsync(id));
-      navigate(`/home/folder/${id}`);
+    dispatch(getdataAsync(path));
+    dispatch(currentChangeAsync(id));
+    navigate(`/home/folder/${id}`);
+  };
+
+  const handleDblClickFile = (url) => {
+    console.log(url);
+    const arr = url.split(".");
+    console.log(arr);
+    if (arr[1] == "pdf") {
+      const plus = arr[0].split("+");
+      console.log(plus);
+      if (plus.length > 1) {
+        window.open(
+          `https://firebasestorage.googleapis.com/v0/b/drivemaster-15ff2.appspot.com/o/${plus[0]}%2B${plus[1]}.pdf?alt=media&token=3dd6548c-78ef-49e0-8d9e-d005900514af`
+        );
+      } else {
+        window.open(
+          `https://firebasestorage.googleapis.com/v0/b/drivemaster-15ff2.appspot.com/o/${plus[0]}.pdf?alt=media&token=3dd6548c-78ef-49e0-8d9e-d005900514af`
+        );
+      }
     } else {
+      window.open(
+        `https://firebasestorage.googleapis.com/v0/b/drivemaster-15ff2.appspot.com/o/${url}?alt=media&token=c05dc0d8-0fee-425e-a185-82deb9948a0c`
+      );
     }
   };
   return (
@@ -63,28 +86,52 @@ const Content = ({ type, userFolder1 }) => {
             </div>
           </div>
           <div>
-            {/* <--------- grid data -----------> */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {/* {<------------- data list ------------->} */}
-              {userFolder1.map((item) => {
-                return (
-                  <p
-                    className="text-center border border-gray-200 rounded-md mx-10 min-w-[200px] p-4"
-                    onDoubleClick={() => handleDblClick(item.userId, item.path)}
-                  >
-                    <p className="text-gray-500 m-auto mb-2">
-                      {type === "folder" ? (
-                        <img src={folder} className="m-auto w-auto"></img>
-                      ) : (
-                        <img src={file} className="m-auto  w-1/2"></img>
-                      )}
-                      <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
-                        {item.name}
+              {type == "folder" &&
+                userFolder1.map((item) => {
+                  return (
+                    <p
+                      className="text-center border border-gray-200 rounded-md mx-10 min-w-[200px] p-4"
+                      onDoubleClick={() =>
+                        handleDblClick(item.userId, item.path)
+                      }
+                    >
+                      <p className="text-gray-500 m-auto mb-2">
+                        {type === "folder" ? (
+                          <img src={folder} className="m-auto w-auto"></img>
+                        ) : (
+                          <img src={file} className="m-auto  w-1/2"></img>
+                        )}
+                        <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
+                          {item.name}
+                        </p>
                       </p>
                     </p>
-                  </p>
-                );
-              })}
+                  );
+                })}
+              {type == "file" &&
+                userFolder1.map((item) => {
+                  return (
+                    <p
+                      className="text-center border border-gray-200 rounded-md mx-10 min-w-[200px] p-4"
+                      onDoubleClick={() => handleDblClickFile(item.url)}
+                    >
+                      <p className="text-gray-500 m-auto mb-2">
+                        {item.url.split(".")[1] === "pdf" ? (
+                          <img src={pdf} className="m-auto w-auto"></img>
+                        ) : (
+                          <img
+                            src={`https://firebasestorage.googleapis.com/v0/b/drivemaster-15ff2.appspot.com/o/${item.url}?alt=media&token=c05dc0d8-0fee-425e-a185-82deb9948a0c`}
+                            className="m-auto  w-1/2 rounded-md"
+                          ></img>
+                        )}
+                        <p className="border-t border-gray-300 mt-2 text-xs bg-gray-100 py-2">
+                          {item.name}
+                        </p>
+                      </p>
+                    </p>
+                  );
+                })}
             </div>
             {/* <-------- detail row -------> */}
             <div class="flex items-center justify-between border-b border-gray-300 p-4">
