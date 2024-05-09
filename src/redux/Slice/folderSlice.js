@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createFolderApi, currrentFolderChange, getDataApi } from "./folderApi";
+import {
+  createFolderApi,
+  currrentFolderChange,
+  getDataApi,
+  getFileDataApi,
+} from "./folderApi";
 import { useDispatch } from "react-redux";
 
 const initialState = {
@@ -33,16 +38,65 @@ export const getdataAsync = createAsyncThunk(
     console.log(path);
     const res = await getDataApi(path);
     const data = res.querySnapshot.docs;
-    const arr = data.map((data) => {
-      const temp = data.data();
-      const val = {
-        ...temp,
-        createdAt: serializeTimestamp(temp.createdAt),
-        updatedAt: serializeTimestamp(temp.updatedAt),
-        lastAccesed: serializeTimestamp(temp.lastAccesed),
-        userId: data.id,
-      };
-      return val;
+    var arr = [];
+    data.map((data) => {
+      console.log(data.data());
+
+      // if (data.data().type === "folder") {
+      //   console.log("yes");
+      //   const temp = data.data();
+      //   const val = {
+      //     ...temp,
+      //     createdAt: serializeTimestamp(temp.createdAt),
+      //     updatedAt: serializeTimestamp(temp.updatedAt),
+      //     lastAccesed: serializeTimestamp(temp.lastAccesed),
+      //     userId: data.id,
+      //   };
+      if (data.data().type === "folder") {
+        console.log("yes");
+        const temp = data.data();
+        const val = {
+          ...temp,
+          createdAt: serializeTimestamp(temp.createdAt),
+          updatedAt: serializeTimestamp(temp.updatedAt),
+          lastAccesed: serializeTimestamp(temp.lastAccesed),
+          userId: data.id,
+        };
+        arr = [...arr, val];
+      } else {
+        arr = [...arr];
+      }
+    });
+    console.log(arr);
+    return arr;
+  }
+);
+
+export const getFiledataAsync = createAsyncThunk(
+  "Slice/getFileDataApi",
+  async (path) => {
+    console.log("fdrftgytfrdf");
+    console.log(path);
+    const res = await getFileDataApi(path);
+    const data = res.querySnapshot.docs;
+    var arr = [];
+    data.map((data) => {
+      console.log(data.data());
+
+      if (data.data().type === "file") {
+        console.log("yes");
+        const temp = data.data();
+        const val = {
+          ...temp,
+          createdAt: serializeTimestamp(temp.createdAt),
+          updatedAt: serializeTimestamp(temp.updatedAt),
+          lastAccesed: serializeTimestamp(temp.lastAccesed),
+          userId: data.id,
+        };
+        arr = [...arr, val];
+      } else {
+        arr = [...arr];
+      }
     });
     console.log(arr);
     return arr;
@@ -58,7 +112,7 @@ export const currentChangeAsync = createAsyncThunk(
   }
 );
 export const currentChangePOPAsync = createAsyncThunk("Slice/", async (id) => {
-  console.log("p");
+  // console.log("p");
   const res = await currrentFolderChange(id);
 
   return id;
@@ -90,6 +144,14 @@ export const folderSlice = createSlice({
         state.userFolders = action.payload;
         state.isLoading = false;
       })
+      .addCase(getFiledataAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getFiledataAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.userFiles = action.payload;
+        state.isLoading = false;
+      })
       .addCase(currentChangeAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -107,6 +169,7 @@ export const folderSlice = createSlice({
   },
 });
 export const selectUserFolder = (state) => state.folder.userFolders;
+export const selectUserFile = (state) => state.folder.userFiles;
 export const selectisLoading = (state) => state.folder.isLoading;
 export const selectCurrentFolder = (state) => state.folder.currentFolder;
 export default folderSlice.reducer;

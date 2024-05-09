@@ -14,6 +14,7 @@ import {
 import {
   currentChangeAsync,
   currentChangePOPAsync,
+  getFiledataAsync,
   getdataAsync,
   selectCurrentFolder,
 } from "../redux/Slice/folderSlice";
@@ -23,8 +24,11 @@ import { Home } from "@mui/icons-material";
 import FolderComponent from "../components/dashboard/folder/FolderComponent";
 import BreadCrumb from "../components/dashboard/homeComponent/BreadCrumb";
 import { get } from "firebase/database";
+import CreateFile from "../components/dashboard/CreateFile";
 const HomePage = () => {
   const [isCreateFolderModelOpen, setIsCreateFolderModelOpen] = useState(false);
+  const [isCreateFolderModelOpen2, setIsCreateFolderModelOpen2] =
+    useState(false);
   const user = useSelector(selectUser);
   const currentFolder = useSelector(selectCurrentFolder);
   const dispatch = useDispatch();
@@ -60,11 +64,12 @@ const HomePage = () => {
       }
     });
     dispatch(getdataAsync(str));
+    dispatch(getFiledataAsync(str));
   }, [dispatch, currentFolder]);
   return (
     <>
       {/* {!user && <Navigate to="/login"></Navigate>} */}
-      <div className=" h-screen overflow">
+      <div className=" h-screen ">
         <Header />
         <div className="flex">
           {isCreateFolderModelOpen && (
@@ -72,8 +77,14 @@ const HomePage = () => {
               setIsCreateFolderModelOpen={setIsCreateFolderModelOpen}
             />
           )}
+          {isCreateFolderModelOpen2 && (
+            <CreateFile
+              setIsCreateFolderModelOpen2={setIsCreateFolderModelOpen2}
+            />
+          )}
           <SideNavigate
             setIsCreateFolderModelOpen={setIsCreateFolderModelOpen}
+            setIsCreateFolderModelOpen2={setIsCreateFolderModelOpen2}
           />
           <Routes>
             <Route path="" element={<HomeComponent></HomeComponent>}></Route>

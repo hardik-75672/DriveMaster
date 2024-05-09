@@ -26,6 +26,17 @@ export function getDataApi(path) {
   });
 }
 
+export function getFileDataApi(path) {
+  return new Promise(async (resolve, reject) => {
+    console.log(path);
+    const querySnapshot = await getDocs(collection(db, path));
+    // querySnapshot.forEach((doc) => {
+    //   console.log(doc.id, " => ", doc.data());
+    // });
+    console.log(querySnapshot);
+    resolve({ querySnapshot });
+  });
+}
 export function currrentFolderChange(folderId) {
   return new Promise(async (resolve, reject) => {
     resolve({ folderId });
