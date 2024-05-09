@@ -39,6 +39,7 @@ const CreateFolder = ({ setIsCreateFolderModelOpen }) => {
             parent: currentFolder,
             lastAccessed: null,
             updatedAt: new Date(1713780153632),
+            type: "folder",
           };
           console.log(str);
           // if (str != "folder") {

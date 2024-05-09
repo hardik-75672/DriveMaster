@@ -1,10 +1,26 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectCurrentFolder } from "../../../redux/Slice/folderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  currentChangePOPAsync,
+  selectCurrentFolder,
+} from "../../../redux/Slice/folderSlice";
+import { current } from "@reduxjs/toolkit";
 
 const BreadCrumb = ({ folder }) => {
   const currentFolder = useSelector(selectCurrentFolder);
   console.log(currentFolder);
+  const dispatch = useDispatch();
+
+  const handleClick = (item) => {
+    for (let i = currentFolder.length - 1; i >= 0; i--) {
+      if (currentFolder[i] !== item) {
+        console.log("ppp");
+        dispatch(currentChangePOPAsync());
+      } else {
+        break;
+      }
+    }
+  };
 
   return (
     <div>
@@ -16,14 +32,16 @@ const BreadCrumb = ({ folder }) => {
           {currentFolder.map((item) => {
             return (
               <li className="flex items-center">
-                <a
+                <li
                   rel="noopener noreferrer"
-                  href="#"
+                  onClick={(e) => {
+                    handleClick(item);
+                  }}
                   title="Back to homepage"
                   className="flex items-center hover:underline"
                 >
                   {item} /
-                </a>
+                </li>
               </li>
             );
           })}

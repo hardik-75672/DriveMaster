@@ -5,6 +5,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import Content from "../../Content.js";
 import {
   selectCurrentFolder,
+  selectUserFile,
   selectUserFolder,
   selectisLoading,
 } from "../../../redux/Slice/folderSlice";
@@ -19,20 +20,22 @@ const FolderComponent = ({ folder }) => {
   if (currentFolder.length == 1) {
     navigate("/home");
   }
+
+  console.log(folderId);
   const myFolder = allFolder.filter((folder) => folder.userId === folderId);
   // const p_length = myFolder[0].parent.length;
   const childFolder = allFolder.filter(
     (folder) => folder.parent[folder.parent.length - 1] === folderId
   );
+  const fileFolder = useSelector(selectUserFile);
 
   console.log(childFolder);
   return (
     <>
       <div className="block">
         <BreadCrumb />
-        {childFolder.map(() => {
-          <div>hello</div>;
-        })}
+
+        {!isLoading && <Content type={"file"} userFolder1={fileFolder} />}
         {!isLoading && <Content type={"folder"} userFolder1={childFolder} />}
       </div>
     </>
